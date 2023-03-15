@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     private float initSpeed;
     private bool _isRunning;
+    private bool _isRolling;
     private Vector2 _direction;
     
     public Vector2 direction
@@ -24,6 +25,12 @@ public class Player : MonoBehaviour
         get{return _isRunning; }
         set{_isRunning = value; }
     }
+
+    public bool isRolling
+    {
+        get{return _isRolling; }
+        set{_isRolling = value; }
+    }
   
     private void Start()
     {
@@ -35,6 +42,7 @@ public class Player : MonoBehaviour
     {
         OnInput();
         OnRun();
+        OnRolling();
     }
 
     private void FixedUpdate()
@@ -68,5 +76,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    #endregion    
+    void OnRolling()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            _isRolling = true;
+            StartCoroutine(EndRoll(0.6f));
+        }
+        
+    }
+
+    private IEnumerator EndRoll(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        _isRolling = false; 
+    }
+
+    #endregion
+
+ 
 }
